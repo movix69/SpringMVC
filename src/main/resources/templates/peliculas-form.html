@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario Pelicula</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<body>
+
+<h2>Pelicula</h2>
+
+<div class="form-panel">
+    <form th:action="@{/peliculas/guardar}" th:object="${pelicula}" method="post">
+        <input type="hidden" th:field="*{id}">
+
+        <label>Titulo</label>
+        <input th:field="*{titulo}">
+
+        <label>Director</label>
+        <input th:field="*{director}">
+
+        <label>Ano</label>
+        <input th:field="*{anio}">
+
+        <label>Imagen</label>
+        <input th:field="*{imagen}" placeholder="https://...">
+
+        <label>URL</label>
+        <input th:field="*{url}" placeholder="https://...">
+
+        <label>Genero</label>
+        <select th:field="*{genero}">
+            <option th:each="g:${generos}" th:value="${g.id}" th:text="${g.nombre}"></option>
+        </select>
+
+        <label>Reparto</label>
+        <select multiple th:field="*{reparto}">
+            <option th:each="i:${interpretes}" th:value="${i.id}" th:text="${i.nombre}"></option>
+        </select>
+
+        <button type="submit">Guardar</button>
+    </form>
+</div>
+
+</body>
+</html>

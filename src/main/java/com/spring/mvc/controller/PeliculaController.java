@@ -1,0 +1,80 @@
+package com.spring.mvc.controller;
+
+import com.hibernate.entity.*;
+import com.spring.mvc.service.PeliculaService;
+import com.hibernate.repository.*;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+@RequestMapping("/peliculas")
+public class PeliculaController {
+
+    @Autowired
+    PeliculaService service;
+
+    @Autowired
+    GeneroRepository generoRepo;
+
+    @Autowired
+    InterpreteRepository interpreteRepo;
+
+    @GetMapping
+    public String listar(
+            @RequestParam(defaultValue = "") String search,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "titulo") String sort,
+            @RequestParam(defaultValue = "8") int size,
+            Model model) {
+
+        Page<Pelicula> peliculas = service.listar(search, page, sort, size);
+
+        model.addAttribute("peliculas", peliculas);
+        model.addAttribute("search", search);
+        model.addAttribute("sort", sort);
+        model.addAttribute("size", size);
+
+        return "peliculas";
+    }
+
+    @GetMapping("/nuevo")
+    public String nuevo(Model model) {
+
+        model.addAttribute("pelicula", new Pelicula());
+        model.addAttribute("generos", generoRepo.findAll());
+        model.addAttribute("interpretes", interpreteRepo.findAll());
+
+        return "peliculas-form";
+    }
+
+    @GetMapping("/editar/{id}")
+    public String editar(@PathVariable int id, Model model) {
+
+        model.addAttribute("pelicula", service.get(id));
+        model.addAttribute("generos", generoRepo.findAll());
+        model.addAttribute("interpretes", interpreteRepo.findAll());
+
+        return "peliculas-form";
+    }
+
+    @PostMapping("/guardar")
+    public String guardar(Pelicula pelicula) {
+
+        service.guardar(pelicula);
+
+        return "redirect:/peliculas";
+    }
+
+    @GetMapping("/borrar/{id}")
+    public String borrar(@PathVariable int id) {
+
+        service.borrar(id);
+
+        return "redirect:/peliculas";
+    }
+
+}

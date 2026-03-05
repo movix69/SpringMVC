@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Créditos - Mi Web Retro</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<div class="ventana">
+    <div class="barra-titulo">
+        <span th:text="${appName}"></span>
+        <div class="botones">
+            <button class="btn">_</button>
+            <button class="btn">□</button>
+            <button class="btn cerrar">X</button>
+        </div>
+    </div>
+
+    <div class="contenido">
+        <h1 th:text="${appName}"></h1>
+        <div class="grupo">
+            <h2>Dirección del Proyecto</h2>
+            <p>Laura Martínez</p>
+        </div>
+
+        <div class="grupo">
+            <h2>Desarrollo Web</h2>
+            <p>Carlos Fernández</p>
+            <p>Ana López</p>
+            <p>David Gómez</p>
+        </div>
+
+        <div class="grupo">
+            <h2>Diseño Gráfico</h2>
+            <p>Marta Ruiz</p>
+        </div>
+
+        <div class="grupo">
+            <h2>Contenido</h2>
+            <p>Equipo Editorial MiWeb95</p>
+        </div>
+
+        <div class="grupo">
+            <h2>Agradecimientos Especiales</h2>
+            <p>A todos los usuarios que todavía aman lo retro 💾</p>
+        </div>
+
+        <button class="boton-aceptar">Aceptar</button>
+    </div>
+</div>
+
+</body>
+</html>
