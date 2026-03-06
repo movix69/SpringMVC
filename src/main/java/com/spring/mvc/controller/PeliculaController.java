@@ -6,6 +6,7 @@ import com.hibernate.repository.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/peliculas")
+@PreAuthorize("hasAnyRole('ADMIN', 'EDITOR', 'VIEWER')")
 public class PeliculaController {
 
     @Autowired
@@ -43,6 +45,7 @@ public class PeliculaController {
     }
 
     @GetMapping("/nuevo")
+    @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR')")
     public String nuevo(Model model) {
 
         model.addAttribute("pelicula", new Pelicula());
@@ -53,6 +56,7 @@ public class PeliculaController {
     }
 
     @GetMapping("/editar/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR')")
     public String editar(@PathVariable int id, Model model) {
 
         model.addAttribute("pelicula", service.get(id));
@@ -63,6 +67,7 @@ public class PeliculaController {
     }
 
     @PostMapping("/guardar")
+    @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR')")
     public String guardar(@Valid @ModelAttribute("pelicula") Pelicula pelicula, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("generos", generoRepo.findAll());
@@ -76,6 +81,7 @@ public class PeliculaController {
     }
 
     @GetMapping("/borrar/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR')")
     public String borrar(@PathVariable int id) {
 
         service.borrar(id);

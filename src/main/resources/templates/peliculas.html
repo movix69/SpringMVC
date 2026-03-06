@@ -1,77 +1,126 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
-    <title>Catalogo de Peliculas</title>
-    <link rel="stylesheet" th:href="@{/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Películas</title>
+    <link rel="stylesheet" th:href="@{/css/peliculas.css}">
 </head>
 
 <body>
+    <!-- Navbar con información del usuario -->
+    <nav class="navbar">
+        <h1>🎬 Sistema de Películas</h1>
+        <div class="navbar-right">
+            <div class="user-info">
+                <span>Bienvenido, <strong sec:authentication="name"></strong></span>
+                <div class="user-role" th:each="auth : ${#authentication.authorities}">
+                    <span th:text="${#strings.substring(auth.authority, 5)}"></span>
+                </div>
+            </div>
+            <a th:href="@{/perfil}">👤 Perfil</a>
+            <a th:href="@{/logout}">🚪 Cerrar Sesión</a>
+        </div>
+    </nav>
 
-<h1>Catalogo de Peliculas</h1>
+    <div class="container">
+        <!-- Formulario de búsqueda - CENTRADO con botón Nueva Película -->
+        <div class="search-section">
+            <form method="get" class="search-form">
+                <input name="search" th:value="${search}" placeholder="Buscar película...">
 
-<form method="get">
-    <input name="search" th:value="${search}" placeholder="Buscar titulo, genero, interprete o ano">
+                <select name="sort">
+                    <option value="titulo" th:selected="${sort == 'titulo'}">Por Título</option>
+                    <option value="anio" th:selected="${sort == 'anio'}">Por Año</option>
+                    <option value="genero" th:selected="${sort == 'genero'}">Por Género</option>
+                    <option value="interprete" th:selected="${sort == 'interprete'}">Por Intérprete</option>
+                </select>
 
-    <select name="sort">
-        <option value="titulo" th:selected="${sort == 'titulo'}">Titulo</option>
-        <option value="anio" th:selected="${sort == 'anio'}">Ano</option>
-        <option value="genero" th:selected="${sort == 'genero'}">Genero</option>
-        <option value="interprete" th:selected="${sort == 'interprete'}">Interprete</option>
-    </select>
+                <button type="submit">🔍 Buscar</button>
+            </form>
 
-    <button type="submit" title="Buscar" aria-label="Buscar">&#128269;</button>
-    <a href="/peliculas/nuevo" class="btn" title="Nueva pelicula" aria-label="Nueva pelicula">&#10133;</a>
-</form>
+            <div class="search-actions">
+                <a href="/peliculas/nuevo" class="btn-new" sec:authorize="hasAnyRole('ADMIN', 'EDITOR')">
+                    + Nueva Película
+                </a>
+                <button class="btn-new" disabled="true" sec:authorize="hasRole('VIEWER')">
+                    Solo lectura
+                </button>
+            </div>
+        </div>
 
+        <!-- Grid de películas -->
+        <div class="grid-container" th:if="${peliculas.content.size() > 0}">
+            <div class="grid">
+                <div class="card" th:each="p:${peliculas.content}">
+                    <a th:href="${p.url}" target="_blank" rel="noopener noreferrer" title="Ir a la película">
+                        <img th:src="${p.imagen}" th:alt="${p.titulo}">
+                    </a>
 
-<div class="grid">
-    <div class="card" th:each="p:${peliculas.content}">
-        <a th:href="${p.url}" target="_blank" rel="noopener noreferrer" title="Ir a la pagina de la pelicula" aria-label="Ir a la pagina de la pelicula">
-            <img th:src="${p.imagen}" alt="Poster pelicula">
-        </a>
+                    <div class="card-content">
+                        <h3 th:title="${p.titulo}" th:text="${p.titulo}"></h3>
+                        <p><strong>Director:</strong> <span th:text="${p.director}"></span></p>
+                        <p><strong>Género:</strong> <span th:text="${p.genero.nombre}"></span></p>
+                        <p><strong>Año:</strong> <span th:text="${p.anio}"></span></p>
+                        <div class="card-reparto">
+                            <strong>Reparto:</strong>
+                            <span th:each="i:${p.reparto}" th:text="${i.nombre} + ', '"></span>
+                        </div>
 
-        <h3 th:text="${p.titulo}"></h3>
-        <p th:text="${p.genero.nombre}"></p>
-        <p th:text="${p.anio}"></p>
+                        <div class="card-actions">
+                            <a class="action edit" th:href="@{'/peliculas/editar/'+${p.id}}" 
+                               sec:authorize="hasAnyRole('ADMIN', 'EDITOR')"
+                               title="Editar película">
+                                ✎ Editar
+                            </a>
+                            <a class="action delete" th:href="@{'/peliculas/borrar/'+${p.id}}" 
+                               sec:authorize="hasAnyRole('ADMIN', 'EDITOR')"
+                               onclick="return confirm('¿Estás seguro de que deseas eliminar esta película?')"
+                               title="Eliminar película">
+                                🗑️ Eliminar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <p>
-            <span th:each="i:${p.reparto}" th:text="${i.nombre} + ' '"></span>
-        </p>
+        <!-- Mensaje cuando no hay películas -->
+        <div th:if="${peliculas.content.size() == 0}" class="empty-message">
+            <p>📭 No se encontraron películas.</p>
+        </div>
 
-        <div class="card-actions">
-            <a class="action" th:href="@{'/peliculas/editar/'+${p.id}}" title="Editar" aria-label="Editar">&#9998;</a>
-            <a class="action danger" th:href="@{'/peliculas/borrar/'+${p.id}}" title="Borrar" aria-label="Borrar">&#128465;</a>
+        <!-- Paginación - CENTRADA ABAJO -->
+        <div class="pagination-wrap">
+            <div class="pagination">
+                <a th:if="${peliculas.hasPrevious()}"
+                   th:href="@{/peliculas(page=${peliculas.number-1},search=${search},sort=${sort},size=${size})}">
+                    ← Anterior
+                </a>
+
+                <span th:text="${peliculas.number+1} + ' / ' + ${peliculas.totalPages > 0 ? peliculas.totalPages : 1}"></span>
+
+                <a th:if="${peliculas.hasNext()}"
+                   th:href="@{/peliculas(page=${peliculas.number+1},search=${search},sort=${sort},size=${size})}">
+                    Siguiente →
+                </a>
+            </div>
+
+            <form class="page-size-form" method="get">
+                <input type="hidden" name="search" th:value="${search}">
+                <input type="hidden" name="sort" th:value="${sort}">
+                <input type="hidden" name="page" value="0">
+
+                <label for="size">Películas por página:</label>
+                <select id="size" name="size" onchange="this.form.submit()">
+                    <option value="8" th:selected="${size == 8}">8</option>
+                    <option value="12" th:selected="${size == 12}">12</option>
+                    <option value="16" th:selected="${size == 16}">16</option>
+                    <option value="20" th:selected="${size == 20}">20</option>
+                </select>
+            </form>
         </div>
     </div>
-</div>
-
-<div class="pagination-wrap">
-    <div class="pagination">
-        <a th:if="${peliculas.hasPrevious()}"
-           th:href="@{/peliculas(page=${peliculas.number-1},search=${search},sort=${sort},size=${size})}">Anterior</a>
-
-        <span th:text="${peliculas.number+1} + ' / ' + ${peliculas.totalPages > 0 ? peliculas.totalPages : 1}"></span>
-
-        <a th:if="${peliculas.hasNext()}"
-           th:href="@{/peliculas(page=${peliculas.number+1},search=${search},sort=${sort},size=${size})}">Siguiente</a>
-    </div>
-
-    <form class="page-size-form" method="get">
-        <input type="hidden" name="search" th:value="${search}">
-        <input type="hidden" name="sort" th:value="${sort}">
-        <input type="hidden" name="page" value="0">
-
-        <label for="size">Items por pagina</label>
-        <select id="size" name="size" onchange="this.form.submit()">
-            <option value="4" th:selected="${size == 4}">4</option>
-            <option value="8" th:selected="${size == 8}">8</option>
-            <option value="12" th:selected="${size == 12}">12</option>
-            <option value="20" th:selected="${size == 20}">20</option>
-        </select>
-    </form>
-</div>
-
 </body>
 </html>

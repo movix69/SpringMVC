@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Sistema de Películas</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>🎬 Películas</h1>
+            <p>Sistema de Gestión de Películas</p>
+        </div>
+
+        <!-- Mensaje de error -->
+        <div th:if="${param.error}" class="alert alert-danger">
+            <strong>Acceso denegado!</strong> Usuario o contraseña incorrectos.
+        </div>
+
+        <!-- Mensaje de logout -->
+        <div th:if="${param.logout}" class="alert alert-info">
+            <strong>Sesión cerrada!</strong> Has cerrado sesión correctamente.
+        </div>
+
+        <!-- Mensaje de éxito (después del registro) -->
+        <div th:if="${success}" class="alert alert-success">
+            <strong>¡Éxito!</strong> <span th:text="${success}"></span>
+        </div>
+
+        <!-- Formulario de login -->
+        <form method="POST" th:action="@{/login}" class="login-form">
+            <div class="form-group">
+                <label for="username">Usuario:</label>
+                <input type="text" id="username" name="username" required placeholder="Ingresa tu usuario">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" required placeholder="Ingresa tu contraseña">
+            </div>
+
+            <button type="submit" class="btn btn-block">Iniciar Sesión</button>
+        </form>
+
+        <div class="divider">O</div>
+
+        <!-- Información de roles -->
+        <div class="role-info">
+            <h4>Roles Disponibles:</h4>
+            <ul>
+                <li><strong>VIEWER:</strong> Solo lectura</li>
+                <li><strong>EDITOR:</strong> Lectura y modificación</li>
+                <li><strong>ADMIN:</strong> Control total</li>
+            </ul>
+        </div>
+
+        <div class="login-footer">
+            ¿No tienes cuenta? <a th:href="@{/registro}">Regístrate aquí</a>
+        </div>
+    </div>
+</body>
+</html>

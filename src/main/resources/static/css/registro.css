@@ -1,0 +1,188 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.registro-container {
+    background: #181818;
+    border-radius: 8px;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.8);
+    width: 100%;
+    max-width: 480px;
+    padding: 50px 40px;
+    border: 1px solid #3a3a3a;
+}
+
+.registro-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.registro-header h1 {
+    color: #E50914;
+    font-size: 32px;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.registro-header p {
+    color: #b3b3b3;
+    font-size: 14px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    color: #ffffff;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #3a3a3a;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #2f2f2f;
+    color: #ffffff;
+    transition: all 0.3s;
+}
+
+.form-group input::placeholder {
+    color: #808080;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #E50914;
+    box-shadow: 0 0 8px rgba(229, 9, 20, 0.3);
+}
+
+.form-group input[type="submit"],
+.form-group button,
+.btn {
+    background: #E50914;
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+    transition: background 0.3s;
+    width: 100%;
+}
+
+.form-group input[type="submit"]:hover,
+.form-group button:hover,
+.btn:hover {
+    background: #b20710;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.help-text {
+    color: #808080;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.error {
+    color: #ff6b6b;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.alert {
+    padding: 14px 16px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.alert-success {
+    background-color: #2d5016;
+    color: #7eff70;
+    border: 1px solid #3a6b1f;
+}
+
+.alert-danger {
+    background-color: #5a1f1f;
+    color: #ff6b6b;
+    border: 1px solid #831010;
+}
+
+.alert-warning {
+    background-color: #5a4a1f;
+    color: #ffb86c;
+    border: 1px solid #836310;
+}
+
+.alert-info {
+    background-color: #1f3a5a;
+    color: #6bbbff;
+    border: 1px solid #1a5a83;
+}
+
+.registro-footer {
+    text-align: center;
+    margin-top: 25px;
+    color: #b3b3b3;
+    font-size: 14px;
+}
+
+.registro-footer a {
+    color: #E50914;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.registro-footer a:hover {
+    text-decoration: underline;
+}
+
+.field-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.field-group.full {
+    grid-template-columns: 1fr;
+}
+
+@media (max-width: 480px) {
+    .registro-container {
+        padding: 30px 20px;
+    }
+
+    .registro-header h1 {
+        font-size: 24px;
+    }
+
+    .field-group {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+}

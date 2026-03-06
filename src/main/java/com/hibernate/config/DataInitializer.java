@@ -1,14 +1,11 @@
 package com.hibernate.config;
 
-import com.hibernate.entity.Genero;
-import com.hibernate.entity.Interprete;
-import com.hibernate.entity.Pelicula;
-import com.hibernate.repository.IGeneroRepository;
-import com.hibernate.repository.IInterpreteRepository;
-import com.hibernate.repository.IPeliculaRepository;
+import com.hibernate.entity.*;
+import com.hibernate.repository.*;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -20,30 +17,78 @@ public class DataInitializer implements CommandLineRunner {
     private final IGeneroRepository generoRepository;
     private final IInterpreteRepository interpreteRepository;
     private final IPeliculaRepository peliculaRepository;
+    private final IRolRepository rolRepository;
+    private final IUsuarioRepository usuarioRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public DataInitializer(
             EntityManager entityManager,
             IGeneroRepository generoRepository,
             IInterpreteRepository interpreteRepository,
-            IPeliculaRepository peliculaRepository
+            IPeliculaRepository peliculaRepository,
+            IRolRepository rolRepository,
+            IUsuarioRepository usuarioRepository,
+            BCryptPasswordEncoder passwordEncoder
     ) {
         this.entityManager = entityManager;
         this.generoRepository = generoRepository;
         this.interpreteRepository = interpreteRepository;
         this.peliculaRepository = peliculaRepository;
+        this.rolRepository = rolRepository;
+        this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     @Transactional
     public void run(String... args) {
         resetDatabase();
+        seedRolesAndUsers();
         seedData();
     }
 
     private void resetDatabase() {
         entityManager.createNativeQuery(
-                "TRUNCATE TABLE t_movies_interpretes, t_movies, t_interpretes, t_generos RESTART IDENTITY CASCADE"
+                "TRUNCATE TABLE t_usuario_roles, t_usuarios, t_roles, t_movies_interpretes, t_movies, t_interpretes, t_generos RESTART IDENTITY CASCADE"
         ).executeUpdate();
+    }
+
+    private void seedRolesAndUsers() {
+        // Crear roles
+        Rol rolViewer = rolRepository.save(new Rol("VIEWER", "Solo puede ver películas"));
+        Rol rolEditor = rolRepository.save(new Rol("EDITOR", "Puede ver y editar películas"));
+        Rol rolAdmin = rolRepository.save(new Rol("ADMIN", "Tiene acceso total al sistema"));
+
+        // Crear usuarios de prueba
+        // Usuario VIEWER
+        Usuario usuarioViewer = new Usuario(
+                "viewer",
+                passwordEncoder.encode("viewer123"),
+                "Usuario Viewer",
+                "viewer@movies.com"
+        );
+        usuarioViewer.addRol(rolViewer);
+        usuarioRepository.save(usuarioViewer);
+
+        // Usuario EDITOR
+        Usuario usuarioEditor = new Usuario(
+                "editor",
+                passwordEncoder.encode("editor123"),
+                "Usuario Editor",
+                "editor@movies.com"
+        );
+        usuarioEditor.addRol(rolEditor);
+        usuarioRepository.save(usuarioEditor);
+
+        // Usuario ADMIN
+        Usuario usuarioAdmin = new Usuario(
+                "admin",
+                passwordEncoder.encode("admin123"),
+                "Administrador",
+                "admin@movies.com"
+        );
+        usuarioAdmin.addRol(rolAdmin);
+        usuarioRepository.save(usuarioAdmin);
     }
 
     private void seedData() {
