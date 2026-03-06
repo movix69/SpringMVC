@@ -16,29 +16,37 @@
         <input type="hidden" th:field="*{id}">
 
         <label>Titulo</label>
-        <input th:field="*{titulo}">
+        <input th:field="*{titulo}" th:classappend="${#fields.hasErrors('titulo')} ? ' input-error'">
+        <small class="field-error" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></small>
 
         <label>Director</label>
-        <input th:field="*{director}">
+        <input th:field="*{director}" th:classappend="${#fields.hasErrors('director')} ? ' input-error'">
+        <small class="field-error" th:if="${#fields.hasErrors('director')}" th:errors="*{director}"></small>
 
         <label>Ano</label>
-        <input th:field="*{anio}">
+        <input type="number" min="1888" max="2100" th:field="*{anio}" th:classappend="${#fields.hasErrors('anio')} ? ' input-error'">
+        <small class="field-error" th:if="${#fields.hasErrors('anio')}" th:errors="*{anio}"></small>
 
         <label>Imagen</label>
-        <input th:field="*{imagen}" placeholder="https://...">
+        <input type="url" th:field="*{imagen}" placeholder="https://..." th:classappend="${#fields.hasErrors('imagen')} ? ' input-error'">
+        <small class="field-error" th:if="${#fields.hasErrors('imagen')}" th:errors="*{imagen}"></small>
 
         <label>URL</label>
-        <input th:field="*{url}" placeholder="https://...">
+        <input type="url" th:field="*{url}" placeholder="https://..." th:classappend="${#fields.hasErrors('url')} ? ' input-error'">
+        <small class="field-error" th:if="${#fields.hasErrors('url')}" th:errors="*{url}"></small>
 
         <label>Genero</label>
-        <select th:field="*{genero}">
+        <select th:field="*{genero}" th:classappend="${#fields.hasErrors('genero')} ? ' input-error'">
+            <option value="">Seleccione genero</option>
             <option th:each="g:${generos}" th:value="${g.id}" th:text="${g.nombre}"></option>
         </select>
+        <small class="field-error" th:if="${#fields.hasErrors('genero')}" th:errors="*{genero}"></small>
 
         <label>Reparto</label>
-        <select multiple th:field="*{reparto}">
+        <select multiple th:field="*{reparto}" th:classappend="${#fields.hasErrors('reparto')} ? ' input-error'">
             <option th:each="i:${interpretes}" th:value="${i.id}" th:text="${i.nombre}"></option>
         </select>
+        <small class="field-error" th:if="${#fields.hasErrors('reparto')}" th:errors="*{reparto}"></small>
 
         <button type="submit" title="Guardar" aria-label="Guardar">&#128190;</button>
     </form>

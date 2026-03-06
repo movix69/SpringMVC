@@ -12,12 +12,12 @@
 <h1>Catalogo de Peliculas</h1>
 
 <form method="get">
-    <input name="search" th:value="${search}" placeholder="Buscar titulo, genero o ano">
+    <input name="search" th:value="${search}" placeholder="Buscar titulo, genero, interprete o ano">
 
     <select name="sort">
         <option value="titulo" th:selected="${sort == 'titulo'}">Titulo</option>
         <option value="anio" th:selected="${sort == 'anio'}">Ano</option>
-        <option value="director" th:selected="${sort == 'director'}">Director</option>
+        <option value="interprete" th:selected="${sort == 'interprete'}">Interprete</option>
     </select>
 
     <button type="submit" title="Buscar" aria-label="Buscar">&#128269;</button>

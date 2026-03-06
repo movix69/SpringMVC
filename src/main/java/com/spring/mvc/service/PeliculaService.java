@@ -14,7 +14,13 @@ public class PeliculaService {
 
     public Page<Pelicula> listar(String search, int page, String sort, int size) {
         int pageSize = Math.max(1, size);
-        Pageable pageable = PageRequest.of(page, pageSize, Sort.by(sort));
+        String sortProperty = switch (sort) {
+            case "anio" -> "anio";
+            case "interprete" -> "reparto.nombre";
+            case "titulo" -> "titulo";
+            default -> "titulo";
+        };
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by(sortProperty));
         return repo.buscar(search, pageable);
     }
 

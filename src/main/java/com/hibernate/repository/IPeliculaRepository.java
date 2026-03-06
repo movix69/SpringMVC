@@ -13,8 +13,10 @@ public interface IPeliculaRepository extends JpaRepository<Pelicula,Integer> {
     @Query("""
 SELECT p FROM Pelicula p
 LEFT JOIN p.genero g
+LEFT JOIN p.reparto i
 WHERE lower(p.titulo) LIKE lower(concat('%',:search,'%'))
 OR lower(g.nombre) LIKE lower(concat('%',:search,'%'))
+OR lower(i.nombre) LIKE lower(concat('%',:search,'%'))
 OR str(p.anio) LIKE concat('%',:search,'%')
 """)
     Page<Pelicula> buscar(String search, Pageable pageable);

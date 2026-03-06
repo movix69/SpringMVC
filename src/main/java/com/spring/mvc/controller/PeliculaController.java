@@ -3,10 +3,11 @@ package com.spring.mvc.controller;
 import com.hibernate.entity.*;
 import com.spring.mvc.service.PeliculaService;
 import com.hibernate.repository.*;
-
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,7 +63,12 @@ public class PeliculaController {
     }
 
     @PostMapping("/guardar")
-    public String guardar(Pelicula pelicula) {
+    public String guardar(@Valid @ModelAttribute("pelicula") Pelicula pelicula, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("generos", generoRepo.findAll());
+            model.addAttribute("interpretes", interpreteRepo.findAll());
+            return "peliculas-form";
+        }
 
         service.guardar(pelicula);
 
