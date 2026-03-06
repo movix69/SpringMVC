@@ -1,7 +1,7 @@
 package com.spring.mvc.service;
 
 import com.hibernate.entity.Pelicula;
-import com.hibernate.repository.PeliculaRepository;
+import com.hibernate.repository.IPeliculaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class PeliculaService {
 
     @Autowired
-    PeliculaRepository repo;
+    IPeliculaRepository repo;
 
     public Page<Pelicula> listar(String search, int page, String sort, int size) {
         int pageSize = Math.max(1, size);

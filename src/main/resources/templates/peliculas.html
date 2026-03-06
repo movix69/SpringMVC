@@ -20,14 +20,16 @@
         <option value="director" th:selected="${sort == 'director'}">Director</option>
     </select>
 
-    <button type="submit">Buscar</button>
-    <a href="/peliculas/nuevo" class="btn">Nueva pelicula</a>
+    <button type="submit" title="Buscar" aria-label="Buscar">&#128269;</button>
+    <a href="/peliculas/nuevo" class="btn" title="Nueva pelicula" aria-label="Nueva pelicula">&#10133;</a>
 </form>
 
 
 <div class="grid">
     <div class="card" th:each="p:${peliculas.content}">
-        <img th:src="${p.imagen}" alt="Poster pelicula">
+        <a th:href="${p.url}" target="_blank" rel="noopener noreferrer" title="Ir a la pagina de la pelicula" aria-label="Ir a la pagina de la pelicula">
+            <img th:src="${p.imagen}" alt="Poster pelicula">
+        </a>
 
         <h3 th:text="${p.titulo}"></h3>
         <p th:text="${p.genero.nombre}"></p>
@@ -38,8 +40,8 @@
         </p>
 
         <div class="card-actions">
-            <a class="action" th:href="@{'/peliculas/editar/'+${p.id}}">Editar</a>
-            <a class="action danger" th:href="@{'/peliculas/borrar/'+${p.id}}">Borrar</a>
+            <a class="action" th:href="@{'/peliculas/editar/'+${p.id}}" title="Editar" aria-label="Editar">&#9998;</a>
+            <a class="action danger" th:href="@{'/peliculas/borrar/'+${p.id}}" title="Borrar" aria-label="Borrar">&#128465;</a>
         </div>
     </div>
 </div>

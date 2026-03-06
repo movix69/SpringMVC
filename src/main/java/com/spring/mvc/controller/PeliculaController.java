@@ -18,10 +18,10 @@ public class PeliculaController {
     PeliculaService service;
 
     @Autowired
-    GeneroRepository generoRepo;
+    IGeneroRepository generoRepo;
 
     @Autowired
-    InterpreteRepository interpreteRepo;
+    IInterpreteRepository interpreteRepo;
 
     @GetMapping
     public String listar(
