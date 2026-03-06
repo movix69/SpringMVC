@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 public interface IPeliculaRepository extends JpaRepository<Pelicula,Integer> {
 
     @Query("""
-SELECT p FROM Pelicula p
+SELECT DISTINCT p FROM Pelicula p
 LEFT JOIN p.genero g
 LEFT JOIN p.reparto i
 WHERE lower(p.titulo) LIKE lower(concat('%',:search,'%'))
