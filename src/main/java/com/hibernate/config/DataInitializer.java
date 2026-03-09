@@ -121,26 +121,85 @@ public class DataInitializer implements CommandLineRunner {
         Interprete hugh = interpreteRepository.save(new Interprete("Hugh Jackman", 1968, "Australia"));
 
         peliculaRepository.saveAll(List.of(
-                pelicula("Forrest Gump", "Robert Zemeckis", 1994, "https://picsum.photos/400/600?random=1", "https://www.imdb.com/title/tt0109830/", drama, List.of(tomHanks)),
-                pelicula("Inception", "Christopher Nolan", 2010, "https://picsum.photos/400/600?random=2", "https://www.imdb.com/title/tt1375666/", cienciaFiccion, List.of(leonardo)),
-                pelicula("Interstellar", "Christopher Nolan", 2014, "https://picsum.photos/400/600?random=3", "https://www.imdb.com/title/tt0816692/", cienciaFiccion, List.of(matthew, anne)),
-                pelicula("The Matrix", "Lana y Lilly Wachowski", 1999, "https://picsum.photos/400/600?random=4", "https://www.imdb.com/title/tt0133093/", cienciaFiccion, List.of(keanu, carrie)),
-                pelicula("Se7en", "David Fincher", 1995, "https://picsum.photos/400/600?random=5", "https://www.imdb.com/title/tt0114369/", thriller, List.of(brad, morgan)),
-                pelicula("The Dark Knight", "Christopher Nolan", 2008, "https://picsum.photos/400/600?random=6", "https://www.imdb.com/title/tt0468569/", accion, List.of(christian)),
-                pelicula("Black Swan", "Darren Aronofsky", 2010, "https://picsum.photos/400/600?random=7", "https://www.imdb.com/title/tt0947798/", thriller, List.of(natalie)),
-                pelicula("Avengers: Endgame", "Anthony y Joe Russo", 2019, "https://picsum.photos/400/600?random=8", "https://www.imdb.com/title/tt4154796/", accion, List.of(robert, chrisEvans, scarlett)),
-                pelicula("La La Land", "Damien Chazelle", 2016, "https://picsum.photos/400/600?random=9", "https://www.imdb.com/title/tt3783958/", drama, List.of(emma, ryan)),
-                pelicula("The Lord of the Rings: The Fellowship of the Ring", "Peter Jackson", 2001, "https://picsum.photos/400/600?random=10", "https://www.imdb.com/title/tt0120737/", fantasia, List.of(elijah, viggo)),
-                pelicula("The Silence of the Lambs", "Jonathan Demme", 1991, "https://picsum.photos/400/600?random=11", "https://www.imdb.com/title/tt0102926/", thriller, List.of(jodie)),
-                pelicula("Joker", "Todd Phillips", 2019, "https://picsum.photos/400/600?random=12", "https://www.imdb.com/title/tt7286456/", drama, List.of(joaquin)),
-                pelicula("The Prestige", "Christopher Nolan", 2006, "https://picsum.photos/400/600?random=13", "https://www.imdb.com/title/tt0482571/", drama, List.of(christian, hugh)),
-                pelicula("Fight Club", "David Fincher", 1999, "https://picsum.photos/400/600?random=14", "https://www.imdb.com/title/tt0137523/", drama, List.of(brad)),
-                pelicula("Iron Man", "Jon Favreau", 2008, "https://picsum.photos/400/600?random=15", "https://www.imdb.com/title/tt0371746/", accion, List.of(robert)),
-                pelicula("Lucy", "Luc Besson", 2014, "https://picsum.photos/400/600?random=16", "https://www.imdb.com/title/tt2872732/", cienciaFiccion, List.of(scarlett)),
-                pelicula("The Revenant", "Alejandro G. Inarritu", 2015, "https://picsum.photos/400/600?random=17", "https://www.imdb.com/title/tt1663202/", drama, List.of(leonardo)),
-                pelicula("Prisoners", "Denis Villeneuve", 2013, "https://picsum.photos/400/600?random=18", "https://www.imdb.com/title/tt1392214/", crimen, List.of(hugh)),
-                pelicula("Captain America: The Winter Soldier", "Anthony y Joe Russo", 2014, "https://picsum.photos/400/600?random=19", "https://www.imdb.com/title/tt1843866/", accion, List.of(chrisEvans, scarlett)),
-                pelicula("The Green Mile", "Frank Darabont", 1999, "https://picsum.photos/400/600?random=20", "https://www.imdb.com/title/tt0120689/", drama, List.of(tomHanks))
+                pelicula("Forrest Gump", "Robert Zemeckis", 1994,
+                        "https://image.tmdb.org/t/p/w500/arw2vcBveWOVZr6pxd9XTd1TdQa.jpg",
+                        "https://www.imdb.com/title/tt0109830/", drama, List.of(tomHanks)),
+
+                pelicula("Inception", "Christopher Nolan", 2010,
+                        "https://image.tmdb.org/t/p/w500/8IB2e4r4oVhHnANbnm7O3Tj6tF8.jpg",
+                        "https://www.imdb.com/title/tt1375666/", cienciaFiccion, List.of(leonardo)),
+
+                pelicula("Interstellar", "Christopher Nolan", 2014,
+                        "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
+                        "https://www.imdb.com/title/tt0816692/", cienciaFiccion, List.of(matthew, anne)),
+
+                pelicula("The Matrix", "Lana y Lilly Wachowski", 1999,
+                        "https://image.tmdb.org/t/p/w500/aOIuZAjPaRIE6CMzbazvcHuHXDc.jpg",
+                        "https://www.imdb.com/title/tt0133093/", cienciaFiccion, List.of(keanu, carrie)),
+
+                pelicula("Se7en", "David Fincher", 1995,
+                        "https://image.tmdb.org/t/p/w500/6yoghtyTpznpBik8EngEmJskVUO.jpg",
+                        "https://www.imdb.com/title/tt0114369/", thriller, List.of(brad, morgan)),
+
+                pelicula("The Dark Knight", "Christopher Nolan", 2008,
+                        "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
+                        "https://www.imdb.com/title/tt0468569/", accion, List.of(christian)),
+
+                pelicula("Black Swan", "Darren Aronofsky", 2010,
+                        "https://image.tmdb.org/t/p/w500/viWheBd44bouiLCHgNMvahLThqx.jpg",
+                        "https://www.imdb.com/title/tt0947798/", thriller, List.of(natalie)),
+
+                pelicula("Avengers: Endgame", "Anthony y Joe Russo", 2019,
+                        "https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
+                        "https://www.imdb.com/title/tt4154796/", accion, List.of(robert, chrisEvans, scarlett)),
+
+                pelicula("La La Land", "Damien Chazelle", 2016,
+                        "https://image.tmdb.org/t/p/w500/uDO8zWDhfWwoFdKS4fzkUJt0Rf0.jpg",
+                        "https://www.imdb.com/title/tt3783958/", drama, List.of(emma, ryan)),
+
+                pelicula("The Lord of the Rings: The Fellowship of the Ring", "Peter Jackson", 2001,
+                        "https://image.tmdb.org/t/p/w500/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg",
+                        "https://www.imdb.com/title/tt0120737/", fantasia, List.of(elijah, viggo)),
+
+                pelicula("The Silence of the Lambs", "Jonathan Demme", 1991,
+                        "https://image.tmdb.org/t/p/w500/rplLJ2hPcOQmkFhTqUte0MkEaO2.jpg",
+                        "https://www.imdb.com/title/tt0102926/", thriller, List.of(jodie)),
+
+                pelicula("Joker", "Todd Phillips", 2019,
+                        "https://image.tmdb.org/t/p/w500/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",
+                        "https://www.imdb.com/title/tt7286456/", drama, List.of(joaquin)),
+
+                pelicula("The Prestige", "Christopher Nolan", 2006,
+                        "https://image.tmdb.org/t/p/w500/bdN3gXuIZYaJP7ftKK2sU0nPtEA.jpg",
+                        "https://www.imdb.com/title/tt0482571/", drama, List.of(christian, hugh)),
+
+                pelicula("Fight Club", "David Fincher", 1999,
+                        "https://image.tmdb.org/t/p/w500/bptfVGEQuv6vDTIMVCHjJ9Dz8PX.jpg",
+                        "https://www.imdb.com/title/tt0137523/", drama, List.of(brad)),
+
+                pelicula("Iron Man", "Jon Favreau", 2008,
+                        "https://image.tmdb.org/t/p/w500/78lPtwv72eTNqFW9COBYI0dWDJa.jpg",
+                        "https://www.imdb.com/title/tt0371746/", accion, List.of(robert)),
+
+                pelicula("Lucy", "Luc Besson", 2014,
+                        "https://picsum.photos/id/1/500/750",
+                        "https://www.imdb.com/title/tt2872732/", cienciaFiccion, List.of(scarlett)),
+
+                pelicula("The Revenant", "Alejandro G. Inarritu", 2015,
+                        "https://picsum.photos/id/2/500/750",
+                        "https://www.imdb.com/title/tt1663202/", drama, List.of(leonardo)),
+
+                pelicula("Prisoners", "Denis Villeneuve", 2013,
+                        "https://image.tmdb.org/t/p/w500/uhviyknTT5cEQXbn6vWIqfM4vGm.jpg",
+                        "https://www.imdb.com/title/tt1392214/", crimen, List.of(hugh)),
+
+                pelicula("Captain America: The Winter Soldier", "Anthony y Joe Russo", 2014,
+                        "https://image.tmdb.org/t/p/w500/tVFRpFw3xTedgPGqxW0AOI8Qhh0.jpg",
+                        "https://www.imdb.com/title/tt1843866/", accion, List.of(chrisEvans, scarlett)),
+
+                pelicula("The Green Mile", "Frank Darabont", 1999,
+                        "https://image.tmdb.org/t/p/w500/velWPhVMQeQKcxggNEU8YmIo52R.jpg",
+                        "https://www.imdb.com/title/tt0120689/", drama, List.of(tomHanks))
         ));
     }
 
