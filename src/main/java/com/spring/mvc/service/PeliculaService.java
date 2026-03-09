@@ -16,18 +16,13 @@ public class PeliculaService {
         int pageSize = Math.max(1, size);
         Pageable pageable;
         
-        if ("interprete".equals(sort) || "genero".equals(sort)) {
-            // No se puede ordenar por colecciones ni por tablas joinadas en PostgreSQL con GROUP BY
-            // Solo paginación
-            pageable = PageRequest.of(page, pageSize);
-        } else {
-            String sortProperty = switch (sort) {
+        String sortProperty = switch (sort) {
                 case "anio" -> "anio";
                 case "titulo" -> "titulo";
+                case "genero" -> "genero.nombre";
                 default -> "titulo";
-            };
-            pageable = PageRequest.of(page, pageSize, Sort.by(sortProperty));
-        }
+        };
+        pageable = PageRequest.of(page, pageSize, Sort.by(sortProperty));
         
         return repo.buscar(search, pageable);
     }

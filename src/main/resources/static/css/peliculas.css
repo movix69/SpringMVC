@@ -333,27 +333,19 @@ body {
 
 /* PAGINACIÓN CENTRADA */
 .pagination-wrap {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    background: transparent;
-    padding: 30px 0 0 0;
-    border-radius: 0;
-    box-shadow: none;
-    border-top: 1px solid #3a3a3a;
-    padding-top: 30px;
-    flex-shrink: 0;
-    flex-wrap: wrap;
+    display: flex;               /* usar flex para centrar fácilmente */
+    justify-content: center;     /* centra horizontalmente */
+    align-items: center;         /* centra verticalmente */
+    gap: 12px;                   /* espacio entre elementos */
+    margin: 12px auto 24px;
+    padding: 0 16px;
 }
 
 .pagination {
     display: flex;
-    gap: 8px;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
+    gap: 10px;
+    justify-content: center;     /* centra los botones dentro del contenedor */
+    flex-wrap: wrap;
 }
 
 .pagination a,
@@ -383,10 +375,8 @@ body {
 
 .page-size-form {
     display: flex;
-    gap: 12px;
     align-items: center;
-    justify-content: flex-end;
-    flex-shrink: 0;
+    gap: 8px;
 }
 
 .page-size-form label {
