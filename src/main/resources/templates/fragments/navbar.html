@@ -1,28 +1,28 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
 <body>
-    <nav class="navbar" th:fragment="navbarPeliculas">
-        <h1>🎬 Sistema de Películas</h1>
-        <div class="navbar-right">
-            <div class="user-info">
-                <span>Bienvenido, <strong sec:authentication="name"></strong></span>
-                <div class="user-role" th:each="auth : ${#authentication.authorities}">
-                    <span th:text="${#strings.substring(auth.authority, 5)}"></span>
-                </div>
+<nav class="navbar" th:fragment="navbarPeliculas">
+    <h1>🎬 Sistema de Películas</h1>
+    <div class="navbar-right">
+        <div class="user-info">
+            <span>Bienvenido, <strong sec:authentication="name"></strong></span>
+            <div class="user-role" th:each="auth : ${#authentication.authorities}">
+                <span th:text="${#strings.substring(auth.authority, 5)}"></span>
             </div>
-            <a th:href="@{/perfil}">👤 Perfil</a>
-            <a th:href="@{/logout}">🚪 Cerrar Sesión</a>
         </div>
-    </nav>
+        <a th:href="@{/perfil}">👤 Perfil</a>
+        <a th:href="@{/logout}">🚪 Cerrar Sesión</a>
+    </div>
+</nav>
 
-    <nav class="navbar" th:fragment="navbarPerfil">
-        <h1>🎬 Sistema de Películas</h1>
-        <div class="navbar-right">
-            <span sec:authentication="name"></span>
-            <a th:href="@{/peliculas}">Películas</a>
-            <a th:href="@{/logout}">Cerrar Sesión</a>
-        </div>
-    </nav>
+<nav class="navbar" th:fragment="navbarPerfil">
+    <h1>🎬 Sistema de Películas</h1>
+    <div class="navbar-right">
+        <span sec:authentication="name"></span>
+        <a th:href="@{/peliculas}">Películas</a>
+        <a th:href="@{/logout}">Cerrar Sesión</a>
+    </div>
+</nav>
 </body>
 </html>

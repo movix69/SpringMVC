@@ -4,7 +4,6 @@ import com.hibernate.entity.Rol;
 import com.hibernate.entity.Usuario;
 import com.hibernate.repository.IRolRepository;
 import com.spring.mvc.service.UsuarioService;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -14,9 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
 @Controller
 @RequestMapping
@@ -36,7 +33,7 @@ public class LoginController {
             @RequestParam(required = false) String error,
             @RequestParam(required = false) String logout,
             Model model) {
-        
+
         if (error != null) {
             model.addAttribute("error", "Usuario o contraseña incorrectos");
         }
@@ -61,10 +58,10 @@ public class LoginController {
      * Procesar el registro de un nuevo usuario
      */
     @PostMapping("/registro")
-    public String registroPost(@Valid @ModelAttribute("usuario") Usuario usuario, 
-                               BindingResult bindingResult, 
+    public String registroPost(@Valid @ModelAttribute("usuario") Usuario usuario,
+                               BindingResult bindingResult,
                                Model model) {
-        
+
         // Validar si hay errores de validación
         if (bindingResult.hasErrors()) {
             return "registro";
@@ -73,7 +70,7 @@ public class LoginController {
         try {
             // Crear el usuario
             Usuario nuevoUsuario = usuarioService.registrar(usuario);
-            
+
             // Asignar rol por defecto (VIEWER)
             Optional<Rol> rolViewer = rolRepository.findByNombre("VIEWER");
             if (rolViewer.isPresent()) {
@@ -97,12 +94,12 @@ public class LoginController {
     @GetMapping({"/", "/index"})
     public String index(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        
+
         if (auth != null && auth.isAuthenticated() && !"anonymousUser".equals(auth.getPrincipal())) {
             model.addAttribute("usuario", auth.getName());
             return "redirect:/peliculas";
         }
-        
+
         return "redirect:/login";
     }
 
@@ -113,13 +110,13 @@ public class LoginController {
     public String perfil(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        
+
         Optional<Usuario> usuario = usuarioService.obtenerPorUsername(username);
         if (usuario.isPresent()) {
             model.addAttribute("usuario", usuario.get());
             return "perfil";
         }
-        
+
         return "redirect:/login";
     }
 
@@ -130,7 +127,7 @@ public class LoginController {
     public String actualizarPerfil(@Valid @ModelAttribute("usuario") Usuario usuarioActualizado,
                                    BindingResult bindingResult,
                                    Model model) {
-        
+
         if (bindingResult.hasErrors()) {
             return "perfil";
         }
@@ -138,14 +135,14 @@ public class LoginController {
         try {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String username = auth.getName();
-            
+
             Optional<Usuario> usuarioOptional = usuarioService.obtenerPorUsername(username);
-            
+
             if (usuarioOptional.isPresent()) {
                 Usuario usuario = usuarioOptional.get();
                 usuario.setNombre(usuarioActualizado.getNombre());
                 usuario.setEmail(usuarioActualizado.getEmail());
-                
+
                 usuarioService.actualizar(usuario);
                 model.addAttribute("success", "Perfil actualizado correctamente");
                 model.addAttribute("usuario", usuario);

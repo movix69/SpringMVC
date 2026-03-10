@@ -1,24 +1,20 @@
 package com.spring.mvc.integration;
 
-import com.hibernate.entity.Rol;
-import com.hibernate.entity.Usuario;
-import com.hibernate.entity.Genero;
-import com.hibernate.entity.Interprete;
-import com.hibernate.entity.Pelicula;
+import com.hibernate.config.DataInitializer;
+import com.hibernate.entity.*;
 import com.hibernate.repository.IGeneroRepository;
 import com.hibernate.repository.IInterpreteRepository;
 import com.hibernate.repository.IRolRepository;
-import com.hibernate.config.DataInitializer;
 import com.spring.mvc.service.PeliculaService;
 import com.spring.mvc.service.UsuarioService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
-import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,10 +23,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -123,7 +116,7 @@ class MvcSecurityIntegrationTest {
         pelicula.setUrl("https://example.com");
         pelicula.setGenero(new Genero("Accion"));
 
-        when(peliculaService.listar("", 0, "titulo", 8))
+        when(peliculaService.listar("", 0, "titulo", 5))
                 .thenReturn(new PageImpl<>(List.of(pelicula)));
 
         mockMvc.perform(get("/peliculas")

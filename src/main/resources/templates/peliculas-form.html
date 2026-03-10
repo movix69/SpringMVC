@@ -3,78 +3,87 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Formulario Película</title>
     <link rel="stylesheet" th:href="@{/css/peliculas-form.css}">
 </head>
 
 <body>
-    <div class="container">
-        <div class="header">
-            <span>🎬</span>
-            <h1 th:if="${pelicula.id == null}">Nueva Película</h1>
-            <h1 th:if="${pelicula.id != null}">Editar Película</h1>
+<div class="container">
+    <div class="header">
+        <span>🎬</span>
+        <h1 th:if="${pelicula.id == null}">Nueva Película</h1>
+        <h1 th:if="${pelicula.id != null}">Editar Película</h1>
+    </div>
+
+    <form method="post" th:action="@{/peliculas/guardar}" th:object="${pelicula}">
+        <input th:field="*{id}" type="hidden">
+
+        <div class="form-group">
+            <label for="titulo">Título</label>
+            <input id="titulo" placeholder="Ej: Inception" required
+                   th:classappend="${#fields.hasErrors('titulo')} ? 'input-error'" th:field="*{titulo}" type="text">
+            <small class="field-error" th:errors="*{titulo}" th:if="${#fields.hasErrors('titulo')}"></small>
         </div>
 
-        <form th:action="@{/peliculas/guardar}" th:object="${pelicula}" method="post">
-            <input type="hidden" th:field="*{id}">
+        <div class="form-group">
+            <label for="director">Director</label>
+            <input id="director" placeholder="Ej: Christopher Nolan" required
+                   th:classappend="${#fields.hasErrors('director')} ? 'input-error'" th:field="*{director}"
+                   type="text">
+            <small class="field-error" th:errors="*{director}" th:if="${#fields.hasErrors('director')}"></small>
+        </div>
 
-            <div class="form-group">
-                <label for="titulo">Título</label>
-                <input id="titulo" type="text" th:field="*{titulo}" th:classappend="${#fields.hasErrors('titulo')} ? 'input-error'" placeholder="Ej: Inception" required>
-                <small class="field-error" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></small>
-            </div>
+        <div class="form-group">
+            <label for="anio">Año</label>
+            <input id="anio" max="2100" min="1888" placeholder="2010" required
+                   th:classappend="${#fields.hasErrors('anio')} ? 'input-error'" th:field="*{anio}" type="number">
+            <small class="field-error" th:errors="*{anio}" th:if="${#fields.hasErrors('anio')}"></small>
+        </div>
 
-            <div class="form-group">
-                <label for="director">Director</label>
-                <input id="director" type="text" th:field="*{director}" th:classappend="${#fields.hasErrors('director')} ? 'input-error'" placeholder="Ej: Christopher Nolan" required>
-                <small class="field-error" th:if="${#fields.hasErrors('director')}" th:errors="*{director}"></small>
-            </div>
+        <div class="form-group">
+            <label for="genero">Género</label>
+            <select id="genero" required th:classappend="${#fields.hasErrors('genero')} ? 'input-error'"
+                    th:field="*{genero}">
+                <option value="">-- Seleccione un género --</option>
+                <option th:each="g:${generos}" th:text="${g.nombre}" th:value="${g.id}"></option>
+            </select>
+            <small class="field-error" th:errors="*{genero}" th:if="${#fields.hasErrors('genero')}"></small>
+        </div>
 
-            <div class="form-group">
-                <label for="anio">Año</label>
-                <input id="anio" type="number" min="1888" max="2100" th:field="*{anio}" th:classappend="${#fields.hasErrors('anio')} ? 'input-error'" placeholder="2010" required>
-                <small class="field-error" th:if="${#fields.hasErrors('anio')}" th:errors="*{anio}"></small>
-            </div>
+        <div class="form-group">
+            <label for="imagen">URL de Imagen</label>
+            <input id="imagen" placeholder="https://ejemplo.com/imagen.jpg" required
+                   th:classappend="${#fields.hasErrors('imagen')} ? 'input-error'"
+                   th:field="*{imagen}" type="url">
+            <small class="field-error" th:errors="*{imagen}" th:if="${#fields.hasErrors('imagen')}"></small>
+        </div>
 
-            <div class="form-group">
-                <label for="genero">Género</label>
-                <select id="genero" th:field="*{genero}" th:classappend="${#fields.hasErrors('genero')} ? 'input-error'" required>
-                    <option value="">-- Seleccione un género --</option>
-                    <option th:each="g:${generos}" th:value="${g.id}" th:text="${g.nombre}"></option>
-                </select>
-                <small class="field-error" th:if="${#fields.hasErrors('genero')}" th:errors="*{genero}"></small>
-            </div>
+        <div class="form-group">
+            <label for="url">URL de la Película</label>
+            <input id="url" placeholder="https://ejemplo.com/pelicula" required th:classappend="${#fields.hasErrors('url')} ? 'input-error'"
+                   th:field="*{url}" type="url">
+            <small class="field-error" th:errors="*{url}" th:if="${#fields.hasErrors('url')}"></small>
+        </div>
 
-            <div class="form-group">
-                <label for="imagen">URL de Imagen</label>
-                <input id="imagen" type="url" th:field="*{imagen}" th:classappend="${#fields.hasErrors('imagen')} ? 'input-error'" placeholder="https://ejemplo.com/imagen.jpg" required>
-                <small class="field-error" th:if="${#fields.hasErrors('imagen')}" th:errors="*{imagen}"></small>
-            </div>
+        <div class="form-group">
+            <label for="reparto">Reparto (seleccione uno o varios actores)</label>
+            <select id="reparto" multiple th:classappend="${#fields.hasErrors('reparto')} ? 'input-error'"
+                    th:field="*{reparto}">
+                <option th:each="i:${interpretes}" th:text="${i.nombre}" th:value="${i.id}"></option>
+            </select>
+            <small class="field-error" th:errors="*{reparto}" th:if="${#fields.hasErrors('reparto')}"></small>
+        </div>
 
-            <div class="form-group">
-                <label for="url">URL de la Película</label>
-                <input id="url" type="url" th:field="*{url}" th:classappend="${#fields.hasErrors('url')} ? 'input-error'" placeholder="https://ejemplo.com/pelicula" required>
-                <small class="field-error" th:if="${#fields.hasErrors('url')}" th:errors="*{url}"></small>
-            </div>
-
-            <div class="form-group">
-                <label for="reparto">Reparto (seleccione uno o varios actores)</label>
-                <select id="reparto" multiple th:field="*{reparto}" th:classappend="${#fields.hasErrors('reparto')} ? 'input-error'">
-                    <option th:each="i:${interpretes}" th:value="${i.id}" th:text="${i.nombre}"></option>
-                </select>
-                <small class="field-error" th:if="${#fields.hasErrors('reparto')}" th:errors="*{reparto}"></small>
-            </div>
-
-            <div class="button-group">
-                <button type="submit" class="btn btn-save">
-                    💾 Guardar
-                </button>
-                <a href="/peliculas" class="btn btn-cancel">
-                    ↩️ Cancelar
-                </a>
-            </div>
-        </form>
-    </div>
+        <div class="button-group">
+            <button class="btn btn-save" type="submit">
+                💾 Guardar
+            </button>
+            <a class="btn btn-cancel" href="/peliculas">
+                ↩️ Cancelar
+            </a>
+        </div>
+    </form>
+</div>
 </body>
 </html>

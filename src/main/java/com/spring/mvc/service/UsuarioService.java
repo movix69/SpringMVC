@@ -32,13 +32,13 @@ public class UsuarioService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Usuario> usuario = usuarioRepository.findByUsername(username);
-        
+
         if (usuario.isEmpty()) {
             throw new UsernameNotFoundException("Usuario no encontrado: " + username);
         }
 
         Usuario u = usuario.get();
-        
+
         if (!u.getActivo()) {
             throw new UsernameNotFoundException("Usuario inactivo: " + username);
         }
@@ -72,7 +72,7 @@ public class UsuarioService implements UserDetailsService {
         if (usuarioRepository.existsByUsername(usuario.getUsername())) {
             throw new Exception("El username ya existe: " + usuario.getUsername());
         }
-        
+
         if (usuarioRepository.existsByEmail(usuario.getEmail())) {
             throw new Exception("El email ya existe: " + usuario.getEmail());
         }
