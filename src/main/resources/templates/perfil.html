@@ -7,14 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/perfil.css}">
 </head>
 <body>
-    <nav class="navbar">
-        <h1>🎬 Sistema de Películas</h1>
-        <div class="navbar-right">
-            <span sec:authentication="name"></span>
-            <a th:href="@{/peliculas}">Películas</a>
-            <a th:href="@{/logout}">Cerrar Sesión</a>
-        </div>
-    </nav>
+    <div th:replace="fragments/navbar :: navbarPerfil"></div>
 
     <div class="container">
         <!-- Mensaje de éxito -->

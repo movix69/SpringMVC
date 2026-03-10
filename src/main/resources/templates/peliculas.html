@@ -10,19 +10,7 @@
 
 <body>
     <!-- Navbar con información del usuario -->
-    <nav class="navbar">
-        <h1>🎬 Sistema de Películas</h1>
-        <div class="navbar-right">
-            <div class="user-info">
-                <span>Bienvenido, <strong sec:authentication="name"></strong></span>
-                <div class="user-role" th:each="auth : ${#authentication.authorities}">
-                    <span th:text="${#strings.substring(auth.authority, 5)}"></span>
-                </div>
-            </div>
-            <a th:href="@{/perfil}">👤 Perfil</a>
-            <a th:href="@{/logout}">🚪 Cerrar Sesión</a>
-        </div>
-    </nav>
+    <div th:fragment="navbarPeliculas"></div>
 
     <div class="container">
         <!-- Formulario de búsqueda - CENTRADO con botón Nueva Película -->
