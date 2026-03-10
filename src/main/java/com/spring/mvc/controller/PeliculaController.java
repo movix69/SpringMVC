@@ -31,7 +31,7 @@ public class PeliculaController {
             @RequestParam(defaultValue = "") String search,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "titulo") String sort,
-            @RequestParam(defaultValue = "8") int size,
+            @RequestParam(defaultValue = "5") int size,
             Model model) {
 
         Page<Pelicula> peliculas = service.listar(search, page, sort, size);
