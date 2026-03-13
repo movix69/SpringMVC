@@ -5,12 +5,14 @@ import com.hibernate.repository.*;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
+@Profile("!test")
 public class DataInitializer implements CommandLineRunner {
 
     private final EntityManager entityManager;
@@ -218,4 +220,3 @@ public class DataInitializer implements CommandLineRunner {
         return pelicula;
     }
 }
-
