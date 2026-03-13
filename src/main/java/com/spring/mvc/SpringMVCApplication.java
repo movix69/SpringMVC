@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(basePackages = "com.hibernate.repository")
 public class SpringMVCApplication {
 
-	static void main(String[] args) {
+	public static void main(String[] args) {
 		SpringApplication.run(SpringMVCApplication.class, args);
 	}
 
