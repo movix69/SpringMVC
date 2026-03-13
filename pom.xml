@@ -27,7 +27,7 @@
 		<url/>
 	</scm>
 	<properties>
-		<java.version>25</java.version>
+		<java.version>21</java.version>
 		<bytebuddy.agent.version>1.17.8</bytebuddy.agent.version>
 	</properties>
 	<dependencies>
